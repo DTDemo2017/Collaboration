@@ -1,0 +1,54 @@
+<!-- all-friend-view -->
+<center><h2 style="color:blue;"><u> FRIENDS </u></h2></center>
+<div class="friends">
+	<div class="container">
+		<div class="friend-all-grids">
+			<div ng-show="currentUser.role=='ADMIN'">
+				<div class="col-md-4 friends-grid" ng-repeat="friend in ctrl.friends"
+					ng-hide="friend.status=='R'">
+					<div class="friend-all">
+						<div class="friend-all-sub frame">
+						    
+							<h3 style="color:blue;">{{friend.userName}}</h3>
+							<h4 style="color:blue;">FRIEND : {{friend.friendName}}</h4>
+<a href = "#/view_friend/" ng-click="ctrl.getFriend(friend.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="FRIENDSHIP DETAILS"></a>							
+						</div>
+						<div class="p-mask">
+						    <h4>
+								<a style="color:blue;"><span><i class="fa fa-rss" aria-hidden="true"></i></span>{{friend.friendId}}</a>
+							</h4>
+							
+							<ul style="text-align: center;">
+								<li><a style="color:blue;"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;<h3></h3></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-hide="currentUser.role=='ADMIN'">
+				<div class="col-md-4 friends-grid" ng-repeat="friend in ctrl.friends"
+					ng-show="friend.status=='A'">
+					<div class="friend-all">
+						<div class="friend-all-sub frame">
+							<h3 style="color:blue;">{{friend.userName}}</h3>
+							<h4 style="color:blue;">FRIEND : {{friend.friendName}}</h4>
+<a href = "#/view_friend/" ng-click="ctrl.getFriend(friend.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="FRIENDSHIP DETAILS"></a>							
+						</div>
+						<div class="p-mask">
+						    <h4>
+								<a style="color:blue;"><span><i class="fa fa-rss" aria-hidden="true"></i></span>{{friend.friendId}}</a>
+							</h4>
+							
+							<ul style="text-align: center;">
+								<li><a style="color:blue;"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;<h3></h3></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

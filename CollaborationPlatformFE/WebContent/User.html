@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<html ng-app="myApp">
+<head>
+<title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+  </head>
+<body>
+<h1> <center>Collaboration Platform</center></h1>
+  <nav class="navbar navbar-inverse">
+       <div class="container-fluid">
+   
+
+ <div class="navbar-header">
+      <a class="navbar-brand" href="#">Collaboration Platform</a>
+    </div>
+    
+
+<ul class="nav navbar-nav">
+      <li><a href="#">Collaboration</a></li>
+      <li><a href="#/">Home</a></li>
+      <li><a href="#/user">User</a></li>
+      <li><a href="#/users">Users</a></li>
+      <li><a href="#/myprofile">My Profile</a></li>
+      
+      
+    </ul>
+ <div class="nav navbar-nav navbar-right">
+ <c:if test="${pageContext.request.userPrincipal.name==null}">
+      <a href="#/user/login">Login</a>
+ </c:if>
+ <c:if test="${pageContext.request.userPrincipal.name!=null}">
+      <a href="#/user/logout">Logout</a>
+ </c:if>
+      </div>   
+
+      
+      
+  </div>
+</nav>
+	<!-- <h1>
+		<center>Collaboration</center>
+	</h1>
+	<hr>
+
+	<a href="#/job">Job</a>
+	<a href="#/friend">Friend</a>
+	<a href="#/blog">Blog</a>
+	<a href="#/home">Home</a> -->
+
+
+	<hr>
+	<div ng-view></div>
+
+
+</body>
+<!-- 
+<script src="WEB-INF/lib/angular.js"></script>
+<script src="WEB-INF/lib/angular-route.js"></script> -->
+
+<script src="User/js/app.js"></script>
+<script src="User/js/HomeController.js"></script>
+<script src="User/js/UserService.js"></script>
+<script src="User/js/UserController.js"></script>
+
+
+
+</html>
+</html>

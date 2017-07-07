@@ -1,0 +1,18 @@
+<center>
+
+<form ng-submit="ctrl.login()" name="myForm" method="post">
+								<div class="three">
+									<input type="text" name="id" required pattern=".{2,15}"
+										placeholder="UserID" ng-model="ctrl.user.id" autofocus>
+								</div>
+								<div class="three">
+									<input type="password" name="password" required pattern=".{3,15}"
+										placeholder="Password" ng-model="ctrl.user.password">
+								</div>
+								<div>
+									<input type="submit" class="btn btn-info kp-button floatright"
+										value="login">
+								</div>
+							</form>
+							
+							</center>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="post_friend">
+	<div class="container">
+		<div class="form-area">
+			<div class="row y-row">
+				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+					<fieldset>
+						<legend>Post Friend</legend>
+						<div class="form-inner">
+							<form ng-submit="ctrl.submit()" class="form-horizontal" name="myForm">
+								<div class="one">
+									<input ng-model="ctrl.friend.userId" type="text" required pattern=".{2,50}"
+										placeholder="UserId">
+								</div>
+								
+								<div class="one">
+									<textarea ng-model="ctrl.friend.friendId" type="text" rows="5" required pattern=".{2,50}"
+										placeholder="FriendId..." />
+								</div>
+								
+								
+								<div>
+									<input type="submit" class="btn btn-info kp-button floatright"
+										value="submit">
+									<input type="button" class="btn btn-info kp-button floatright" 
+										value="reset form" ng-click="ctrl.reset()">
+								</div>
+							</form>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

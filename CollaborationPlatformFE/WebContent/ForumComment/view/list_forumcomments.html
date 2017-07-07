@@ -1,0 +1,60 @@
+<!-- all-forumcomment-view -->
+<center><h2 style="color:blue;"><u> FORUM COMMENTS </u></h2></center>
+<div class="forumcomments">
+	<div class="container">
+		<div class="forumcomment-all-grids">
+			<div ng-show="currentUser.role=='ADMIN'">
+				<div class="col-md-4 forumcomments-grid" ng-repeat="forumcomment in ctrl.forumcomments"
+					>
+					
+					<div class="forumcomment-all">
+						<div class="forumcomment-all-sub frame">
+						    
+							<h3 style="color:blue;">{{forumcomment.forumName}}</h3>
+							<p style="color:blue;"> {{forumcomment.comments}}</p>
+							<div class="more">
+								
+								<input	type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.getSelectedForumComment(forumcomment.id)" value="Know More..">
+								
+							</div>
+						</div>
+						<div class="p-mask">
+							<h4>
+								<a><span><i class="fa fa-rss" aria-hidden="true"></i></span><p style="color:blue;">Comment By : {{forumcomment.userName}}</p></a>
+							</h4>
+							<ul style="text-align: center;">
+								<li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;<h4 style="color:blue;">{{forumcomment.userId}}</h4></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-hide="currentUser.role=='ADMIN'">
+				<div class="col-md-4 forumcomments-grid" ng-repeat="forumcomment in ctrl.forumcomments"
+					>
+					<div class="forumcomment-all">
+						<div class="forumcomment-all-sub frame">
+						    
+							<h3 style="color:blue;">{{forumcomment.forumName}}</h3>
+							<p style="color:blue;"> {{forumcomment.comments}}</p>
+							<div class="more">
+								<input type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.getSelectedForumComment(forumcomment.id)" value="Know More..">
+							</div>
+						</div>
+						<div class="p-mask">
+							<h4>
+								<a><span><i class="fa fa-rss" aria-hidden="true"></i></span><p style="color:blue;">Comment By : {{forumcomment.userName}}</p></a>
+							</h4>
+							<ul style="text-align: center;">
+								<li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;<h4 style="color:blue;">{{forumcomment.userId}}</h4></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

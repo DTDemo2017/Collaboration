@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id="post_user">
+	<div class="container">
+		<div class="form-area">
+			<div class="row y-row">
+				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+					<fieldset>
+						<legend>Post User</legend>
+						<div class="form-inner">
+							<form ng-submit="ctrl.submit()" class="form-horizontal" name="myForm">
+								<div class="one">
+									<input ng-model="ctrl.user.id" type="text" required pattern=".{2,50}"
+										placeholder="Id">
+								</div>
+								
+								<div class="one">
+									<input ng-model="ctrl.user.name" type="text" required pattern=".{3,25}"
+										placeholder="Name" />
+								</div>
+								
+								<div class="one">
+									<input ng-model="ctrl.user.password" type="password" required pattern=".{3,25}"
+										placeholder="Password" />
+								</div>
+								
+								<div class="one">
+									<textarea ng-model="ctrl.user.email" type="email" rows="5" required pattern=".{5,2500}"
+										placeholder="Email...."></textarea>
+								</div>
+								<div>
+									<input type="submit" class="btn btn-info kp-button floatright"
+										value="submit">
+									<input type="button" class="btn btn-info kp-button floatright" 
+										value="reset form" ng-click="ctrl.reset()">
+								</div>
+							</form>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
