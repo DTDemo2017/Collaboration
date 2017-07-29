@@ -30,6 +30,12 @@ app.controller('BlogCommentController', ['BlogCommentService', '$scope', '$locat
 		self.listBlogComments();
 		self.createBlogComment = function(blogcomment) {
 			console.log("-->BlogCommentController : calling 'createBlogComment' method.");
+			var currentUser = $rootScope.currentUser
+			if (typeof currentUser == 'undefined') {
+				alert("Please Login to post a BlogComment...")
+				console.log('User not logged in , can not post a blogcomment...');
+				$location.path('/user/login');
+			};
 			BlogCommentService
 						.createBlogComment(blogcomment)
 						.then(function(d) {
@@ -38,6 +44,18 @@ app.controller('BlogCommentController', ['BlogCommentService', '$scope', '$locat
 						},
 						function(errResponse) {
 							console.error('Error while posting new BlogComment...');
+						});
+		};
+		self.getBlogComment = function(id) {
+			console.log("-->BlogCommentController : calling 'getBlogComment' method with id : "+id);
+			BlogCommentService
+						.getBlogComment(id)
+						.then(function(d) {
+							self.blogcomment = d;
+							$location.path('/view_blogcomment/');
+						},
+						function(errResponse) {
+							console.error('Error while fetching blogcomment details...')
 						});
 		};
 		

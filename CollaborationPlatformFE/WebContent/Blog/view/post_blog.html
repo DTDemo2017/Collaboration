@@ -11,18 +11,20 @@
 			<div class="row y-row">
 				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 					<fieldset>
-						<legend>Post Blog</legend>
+						<legend style="color:blue;">POST BLOG</legend>
+						<hr>
 						<div class="form-inner">
 							<form ng-submit="ctrl.submit()" class="form-horizontal" name="myForm">
 								<div class="one">
-									<input ng-model="ctrl.blog.title" type="text" required pattern=".{5,50}"
+									<input ng-model="ctrl.blog.title" type="text" required pattern=".{3,50}"
 										placeholder="Title">
 								</div>
+								<hr>
 								<div class="one">
 									<textarea ng-model="ctrl.blog.content" type="text" rows="5" required pattern=".{5,500}"
 										placeholder="Content..." />
 								</div>
-								
+								<hr>
 								<div>
 									<input type="submit" class="btn btn-info kp-button floatright"
 										value="submit">

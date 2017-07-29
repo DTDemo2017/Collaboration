@@ -30,6 +30,12 @@ app.controller('ForumCommentController', ['ForumCommentService', '$scope', '$loc
 		self.listForumComments();
 		self.createForumComment = function(forumcomment) {
 			console.log("-->ForumCommentController : calling 'createForumComment' method.");
+			var currentUser = $rootScope.currentUser
+			if (typeof currentUser == 'undefined') {
+				alert("Please Login to post a ForumComment...")
+				console.log('User not logged in , can not post a forumcomment...');
+				$location.path('/user/login');
+			};
 			ForumCommentService
 						.createForumComment(forumcomment)
 						.then(function(d) {
@@ -38,6 +44,18 @@ app.controller('ForumCommentController', ['ForumCommentService', '$scope', '$loc
 						},
 						function(errResponse) {
 							console.error('Error while posting new ForumComment...');
+						});
+		};
+		self.getForumComment = function(id) {
+			console.log("-->ForumCommentController : calling 'getForumComment' method with id : "+id);
+			ForumCommentService
+						.getForumComment(id)
+						.then(function(d) {
+							self.forumcomment = d;
+							$location.path('/view_forumcomment/');
+						},
+						function(errResponse) {
+							console.error('Error while fetching forumcomment details...')
 						});
 		};
 		

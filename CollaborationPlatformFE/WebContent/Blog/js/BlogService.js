@@ -44,7 +44,75 @@ app.factory('BlogService', ['$http', '$q', '$rootScope',
 								return $q.reject(errResponse);
 							});
 			},
-		
+			
+			updateBlog : function(blog, id) {
+				console.log("--> BlogService : calling 'updateBlog' method with id : "+id);
+				return $http
+							.put(BASE_URL+'/updateBlog/'+id)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.error('Error while updating Blog');
+								return $q.reject(errResponse);
+							});
+			},
+			
+			deleteBlog : function(id) {
+				console.log("--> BlogService : calling 'deleteBlog' method with id : "+id);
+				return $http
+							 delete(BASE_URL+'/deleteBlog/'+id)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.log('Error while deleting Blog');
+								return $q.reject(errResponse);
+							});
+			},
+			
+			approveBlog : function(blog, id) {
+				console.log("-->BlogService : calling approveBlog() method : getting blog with id : " + id);
+				return $http
+							.put(BASE_URL+'/approveBlog/'+ id, blog)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.log("Error while approving Blog");
+								return $q.reject(errResponse);
+							});
+			},
+			
+			rejectBlog : function(blog, id) {
+				console.log("-->BlogService : calling rejectBlog() method : getting blog with id : " + id);
+				return $http
+							.put(BASE_URL+'/rejectBlog/'+ id, blog)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.log("Error while rejecting Blog");
+								return $q.reject(errResponse);
+							});
+			},
+			
+			likeBlog : function(blog, id) {
+				console.log("-->BlogService : calling likeBlog() method : getting blog with id : " + id);
+				return $http
+							.put(BASE_URL+'/likeBlog/'+id, blog)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.log("Error while liking Blog.");
+								return $q.reject(errResponse);
+							});
+			}
+			
 		};
+
+		
+		
 }]);
 

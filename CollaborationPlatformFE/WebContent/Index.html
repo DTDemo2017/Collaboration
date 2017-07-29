@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<html ng-app="myApp">
+<head>
+<title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+  </head>
+<body ng-controller="UserController as ctrl">
+<h1 style="color:blue;"> <center><u>COLLABORATION PLATFORM</u></center></h1>
+  <nav class="navbar navbar-inverse">
+       <div class="container-fluid">
+   
+
+ <div class="navbar-header">
+      <a class="navbar-brand" href="#">Collaboration Platform</a>
+    </div>
+    
+
+<ul class="nav navbar-nav">
+      <li><a href="#">Collaboration</a></li>
+      <li><a href="#/">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Blog <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/blog">BLOG</a></li>
+          <li><a href="#/new_blogs">NEW BLOGS</a></li>
+          <li><a href="#/appr_blogs">APPROVED BLOGS</a></li>
+          <li><a href="#/rej_blogs">REJECTED BLOGS</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">BlogComment <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/blogcomment">BLOG COMMENT</a></li>
+          <li><a href="#/blogcomments">BLOG COMMENTS</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Forum <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/forum">FORUM</a></li>
+          <li><a href="#/forums">FORUMS</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">ForumComment <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/forumcomment">FORUM COMMENT</a></li>
+          <li><a href="#/forumcomments">FORUM COMMENTS</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Friend <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/friend">FRIEND</a></li>
+          <li><a href="#/friends">FRIENDS</a></li>
+          <li><a href="#/new_requests/">NEW REQUESTS</a></li>
+          <li><a href="#/friends_list/">FRIENDS LIST</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Job <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/job">JOB</a></li>
+          <li><a href="#/jobs">JOBS</a></li>
+          <li><a href="#/vacantjobs">VACANCIES</a></li>
+          <li><a href="#/all_appliedjobs">ALL JOB APPLICATIONS</a></li>
+          <li><a href="#/my_appliedjobs">MY JOB APPLICATIONS</a></li>
+          <li><a href="#/change_status_of_appliedjobs">CHANGE STATUS OF JOB APPLICATIONS</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">User <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/user">USER</a></li>
+          <li><a href="#/users">USERS</a></li>
+          <li><a href="#/myProfile">MY PROFILE</a></li>
+          
+        </ul>
+      </li>
+      
+      <li><a href="#/about_us">About Us</a></li>
+      <li><a href="#/contact_us">Contact Us</a></li>
+      
+      
+</ul>
+<div class="nav navbar-nav navbar-right">
+<li   ng-show="currentUser!=''" class="navbar-brand">  Welcome {{currentUser.id}}-{{currentUser.name}} </li>
+
+<a href="#/user/login">Login</a>
+      
+<a href = "#/user/logout" ng-click="ctrl.logout()">Logout</a>
+      </div>       
+
+      
+      
+  </div>
+</nav>
+	
+
+
+	<hr>
+	<div ng-view></div>
+
+
+</body>
+ 
+
+
+<script src="resources/js/app.js"></script>
+<script src="Blog/js/HomeController.js"></script>
+<script src="Blog/js/BlogService.js"></script>
+<script src="Blog/js/BlogController.js"></script>
+
+
+<script src="BlogComment/js/BlogCommentService.js"></script>
+<script src="BlogComment/js/BlogCommentController.js"></script>
+
+
+<script src="Forum/js/ForumService.js"></script>
+<script src="Forum/js/ForumController.js"></script>
+
+
+<script src="ForumComment/js/ForumCommentService.js"></script>
+<script src="ForumComment/js/ForumCommentController.js"></script>
+
+
+<script src="Job/js/JobService.js"></script>
+<script src="Job/js/JobController.js"></script>
+
+
+<script src="Friend/js/FriendService.js"></script>
+<script src="Friend/js/FriendController.js"></script>
+
+
+<script src="User/js/UserService.js"></script>
+<script src="User/js/UserController.js"></script>
+
+</html>
+</html>

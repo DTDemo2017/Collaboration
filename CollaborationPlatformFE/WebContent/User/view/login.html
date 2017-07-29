@@ -1,5 +1,7 @@
 <center>
-
+<fieldset>
+						<legend style="color:blue;">LOGIN HERE</legend>
+						
 <form ng-submit="ctrl.login()" name="myForm" method="post">
 								<div class="three">
 									<input type="text" name="id" required pattern=".{2,15}"
@@ -9,10 +11,13 @@
 									<input type="password" name="password" required pattern=".{3,15}"
 										placeholder="Password" ng-model="ctrl.user.password">
 								</div>
+								<hr>
+								
 								<div>
 									<input type="submit" class="btn btn-info kp-button floatright"
 										value="login">
 								</div>
 							</form>
+							</fieldset>
 							
 							</center>

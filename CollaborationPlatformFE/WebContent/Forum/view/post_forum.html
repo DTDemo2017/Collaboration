@@ -11,18 +11,15 @@
 			<div class="row y-row">
 				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 					<fieldset>
-						<legend>Post Forum</legend>
+						<legend style="color:blue;">CREATE FORUM</legend>
 						<div class="form-inner">
 							<form ng-submit="ctrl.submit()" class="form-horizontal" name="myForm">
-								<div class="one">
-									<input ng-model="ctrl.forum.userId" type="text" required pattern=".{2,50}"
-										placeholder="UserId">
-								</div>
+								
 								<div class="one">
 									<textarea ng-model="ctrl.forum.description" type="text" rows="5" required pattern=".{5,500}"
 										placeholder="Description..." />
 								</div>
-								
+								<hr>
 								<div>
 									<input type="submit" class="btn btn-info kp-button floatright"
 										value="submit">

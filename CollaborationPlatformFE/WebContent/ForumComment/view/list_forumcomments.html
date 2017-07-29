@@ -14,9 +14,8 @@
 							<p style="color:blue;"> {{forumcomment.comments}}</p>
 							<div class="more">
 								
-								<input	type="button" class="btn btn-info btn-more"
-									ng-click="ctrl.getSelectedForumComment(forumcomment.id)" value="Know More..">
-								
+								<a href = "#/view_forumcomment/" ng-click="ctrl.getForumComment(forumcomment.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="Know More.."></a>	
 							</div>
 						</div>
 						<div class="p-mask">
@@ -39,8 +38,8 @@
 							<h3 style="color:blue;">{{forumcomment.forumName}}</h3>
 							<p style="color:blue;"> {{forumcomment.comments}}</p>
 							<div class="more">
-								<input type="button" class="btn btn-info btn-more"
-									ng-click="ctrl.getSelectedForumComment(forumcomment.id)" value="Know More..">
+								<a href = "#/view_forumcomment/" ng-click="ctrl.getForumComment(forumcomment.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="Know More.."></a>	
 							</div>
 						</div>
 						<div class="p-mask">

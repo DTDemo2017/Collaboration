@@ -15,7 +15,45 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 			errorMessage : ''
 		};
 		
-		self.users = [];
+		//self.users = [];
+		
+		
+		self.userLoggedIn="";
+
+		self.currentUser = {
+			id : '',
+			name : '',
+			password : '',
+			email : '',
+			role : '',
+	        status : '',
+			isOnline : '',
+			errorCode : '',
+			errorMessage : ''
+			
+		};
+
+		self.users = [];    // json array
+
+		$scope.orderByMe = function(x) {
+			$scope.myOrderBy = x;
+		}
+
+		self.friend = {
+				id : '', 
+				userId : '', 
+				friendId : '', 
+				status : '',
+				isOnline : '',
+				userName : '',
+				friendName : '',
+				friendDate : '',
+				errorCode : '',
+				errorMessage : ''
+			};
+
+			self.friends = [];
+		
 
 		self.fetchAllUsers = function() {
 			console.log("--> UserController : calling fetchAllUsers method.");
@@ -29,6 +67,60 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 			});
 		};
 		self.fetchAllUsers();
+		
+		
+		/*self.sendFriendRequest = function(friendId) {
+			console.log("--> UserController : calling 'sendFriendRequest' method with friendId : "+friendId);
+			var currentUser = $rootScope.currentUser
+			if (typeof currentUser == 'undefined') {
+				alert("Please Login to send a friend request...")
+				console.log('User not logged in , can not send a friend request...');
+				$location.path('/login');
+			};
+			UserService
+							.sendFriendRequest(friendId)
+							.then(function(d) {
+								self.friend = d;
+								alert("Friend request sent successfully...")
+								self.fetchAllUsers();
+								console.log("-->UserController : ", self.friend);
+								console.log("-->UserController : ", self.user);
+							},
+							function(errResponse) {
+								console.error("Error while fetching friends.");
+							});
+		};*/
+		
+		self.sendFriendRequest = function(user) {   //I made this method
+			  console.log("-->UserController : calling 'sendFriendRequest' method.");
+			  var currentUser = $rootScope.currentUser
+						if (typeof currentUser == 'undefined') {
+							alert("Please Login to send a Friend Request...")
+							console.log('User not logged in , can not send a Friend Request...');
+							$location.path('/user/login');
+						};
+			                UserService
+									.sendFriendRequest(user)
+									.then(function(d) {
+										self.friend = d;
+										alert("You have successfully sent a friend request...");
+										self.fetchAllUsers();
+										console.log("-->UserController : ", self.friend);
+										console.log("-->UserController : ", self.user);
+									},
+									function(errResponse) {
+										console.error('Error while sending friend request...')
+									});
+
+					};
+
+			self.send = function() {   //I made this method
+						console.log("-->UserController : calling 'send()' method.", self.user);
+						self.sendFriendRequest(user);
+						console.log('Friend Request sent successfully...', user);
+					};
+
+
 		
 		self.createUser = function(user) {
 			console.log("-->UserController : calling 'createUser' method.");
@@ -44,11 +136,29 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 		};
 		
 		
+		self.myProfile = function() {
+			console.log("myProfile...")
+			UserService
+					.myProfile()
+					.then(
+							function(d) {
+								self.user = d;
+								$location
+										.path("/myProfile")
+							},
+							function(errResponse) {
+								console
+										.error('Error while fetch profile.');
+							});
+		};
+
+		
+		
 		self.updateUser = function(user, id) {
-			console.log("--> UserController : calling updateUser method.");
+			console.log("--> UserController : calling 'updateUser' method.");
 			UserService.updateUser(user, id).then(function(d) {
-				self.users = d;
-				$location.path('/myprofile');
+				self.user = d;
+				$location.path('/myProfile');
 				}, function(errResponse) {
 					console.error('--> UserController : Error while updating User...');
 				});
@@ -70,7 +180,7 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 		};
 		
 		
-		self.updateUser = function(user, id) {
+		/*self.updateUser = function(user, id) {
 			console.log("--> UserController : calling updateUser method.");
 			UserService.updateUser(user, id).then(function(d) {
 				self.users = d;
@@ -78,7 +188,7 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 				}, function(errResponse) {
 					console.error('--> UserController : Error while updating User...');
 				});
-		};
+		};*/
 		
 		self.authenticate = function(user) {
 			console.log("--> UserController : calling authenticate method.");
@@ -101,7 +211,9 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 				console.error('Error while authenticate User...');
 			});
 		};
-		self.logout = function() {
+		
+
+		/*self.logout = function() {
 			console.log("--> UserController : calling logout method.");
 			$rootScope.currentUser = {};
 			$cookieStore.remove('currentUser');
@@ -110,7 +222,24 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 			
 			$window.location.reload();
 			$location.path('/');
+		}*/
+		
+		self.logout = function() {
+			console.log("--> UserController : calling logout method.");
+			
+			$rootScope.currentUser = {};
+			//$localStorage.currentUser.remove('currentUser');
+			//$cookieStore.remove('currentUser');
+			UserService.logout();
+			
+			console.log("-->UserController : User Logged out.");
+			
+			$window.location.reload();
+			$location.path('/');
 		}
+
+		
+		
 
 		self.deleteUser = function(id) {
 			console.log("--> UserController : calling deleteUser function.");
@@ -135,7 +264,7 @@ app.controller('UserController', ['$http', '$scope', 'UserService',  '$location'
 				self.createUser(self.user);
 				console.log('Saving new user...');
 			}
-			$location.path('/login');
+			$location.path('/user/login');
 			self.reset();
 		};
 		

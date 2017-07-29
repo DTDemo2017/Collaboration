@@ -31,6 +31,20 @@ app.factory('ForumCommentService', ['$http', '$q', '$rootScope',
 							});
 			},
 			
+			getForumComment : function(id) {
+				console.log("-->ForumCommentService : calling 'getForumComment' method with id : "+id);
+				return $http
+							.get(BASE_URL+'/getForumComment/'+id)
+							.then(function(response) {
+								$rootScope.selectedForumComment = response.data;
+								return response.data;
+							},
+							function(errResponse) {
+								console.error('Error while getting forumcomment details');
+								return $q.reject(errResponse);
+							});
+			},
+			
 			
 		
 		};

@@ -5,7 +5,7 @@
 		<div class="user-all-grids">
 			<div ng-show="currentUser.role=='ADMIN'">
 				<div class="col-md-4 users-grid" ng-repeat="user in ctrl.users"
-					ng-hide="user.status=='R'">
+					ng-hide="user.status!='A'">
 					<div class="user-all">
 						<div class="user-all-sub frame">
 						    
@@ -15,7 +15,8 @@
 								 
 <a href = "#/view_user/" ng-click="ctrl.getUser(user.id)"><input	type="button" class="btn btn-info btn-more"
 									 value="USER DETAILS"></a>
-								
+<input type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.sendFriendRequest(user)" value="Send Friend Request">
 							</div>
 						</div>
 						<div class="p-mask">
@@ -32,7 +33,7 @@
 			</div>
 			<div ng-hide="currentUser.role=='ADMIN'">
 				<div class="col-md-4 users-grid" ng-repeat="user in ctrl.users"
-					ng-show="user.status=='A'">
+					ng-hide="user.status!='A'">
 					<div class="user-all">
 						<div class="user-all-sub frame">
 							<h3 style="color:blue;">NAME : {{user.name}}</h3>
@@ -40,7 +41,9 @@
 							<div class="more">
 <a href = "#/view_user/" ng-click="ctrl.getUser(user.id)"><input	type="button" class="btn btn-info btn-more"
 									 value="USER DETAILS"></a>
-							</div>
+<input type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.sendFriendRequest(user)" value="Send Friend Request">
+						    </div>
 						</div>
 						<div class="p-mask">
 						    <h4>

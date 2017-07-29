@@ -3,9 +3,9 @@
 <div class="friends">
 	<div class="container">
 		<div class="friend-all-grids">
-			<div ng-show="currentUser.role=='ADMIN'">
+			<div ng-show="friend.status=='A'">
 				<div class="col-md-4 friends-grid" ng-repeat="friend in ctrl.friends"
-					ng-hide="friend.status=='R'">
+					ng-hide="friend.status!='A'">
 					<div class="friend-all">
 						<div class="friend-all-sub frame">
 						    

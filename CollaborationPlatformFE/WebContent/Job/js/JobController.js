@@ -10,6 +10,7 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 			description : '',
 			jobDate : '', 
 			status : '', 
+			posts : '',
 			errorCode : '',
 			errorMessage : ''
 		};
@@ -41,6 +42,12 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 		self.listJobs();
 		self.createJob = function(job) {
 			console.log("-->JobController : calling 'createJob' method.");
+			var currentUser = $rootScope.currentUser
+			if (typeof currentUser == 'undefined') {
+				alert("Please Login to post a Job next time...")
+				console.log('Admin not logged in , can not post a job...');
+				$location.path('/user/login');
+			};
 			JobService
 						.createJob(job)
 						.then(function(d) {
@@ -49,6 +56,16 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 						},
 						function(errResponse) {
 							console.error('Error while posting new Job...');
+						});
+		};
+		
+		self.updateJob = function(job, id) {
+			console.log("-->JobController : calling 'updateJob' method with id : "+id);
+			JobService
+						.updateJob(job, id)
+						.then(self.listJobs,
+						function(errResponse) {
+							console.error("Error while updating job.")
 						});
 		};
 		
@@ -82,9 +99,9 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 			console.log("-->JobController : calling 'applyForJob' method.");
 			var currentUser = $rootScope.currentUser
 			if (typeof currentUser == 'undefined') {
-				alert("Please Login to apply for a Job...")
+				alert("Please Login to apply for a Job next time...")
 				console.log('User not logged in , can not apply for job...');
-				$location.path('/login');
+				$location.path('/user/login');
 			};
 			JobService
 						.applyForJob(job)
@@ -108,7 +125,58 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 		};
 		
 		
+		self.listJobApplications = function() {
+			console.log("-->JobController : calling 'listJobApplications' method.");
+			JobService
+						.listJobApplications()
+						.then(function(d) {
+							self.jobApplications = d;
+						},
+						function(errResponse) {
+							console.error("Error while getting jobApplication list.")
+						});
+		};
 		
+		self.listJobApplications();
+
+		self.getMyAppliedJobs = function() {
+			console.log("-->JobController : calling 'getMyAppliedJobs' method.");
+			JobService
+						.getMyAppliedJobs()
+						.then(function(d) {
+							self.jobApplications = d;
+						},
+						function(errResponse) {
+							console.error('Error while fetching all applied jobs...');
+						});
+		};
+		self.getMyAppliedJobs();
+		
+		self.callForInterviewJobApplication = function(jobApplication, id) {
+			console.log("-->JobController : calling callForInterviewJobApplication() method : JobApplication id is : " + id);
+			console.log("-->JobController",self.jobApplication);
+			JobService.callForInterviewJobApplication(jobApplication, id).then(function(d) {
+				self.jobApplication = d;
+				alert('Called for interview successfully...');
+				self.listJobApplications();
+			},
+					function(errResponse) {
+						console.error("Error while generating call for Interview...")
+					});
+		};
+		
+		self.rejectJobApplication = function(jobApplication, id) {
+			console.log("-->JobController : calling rejectJobApplication() method : JobApplication id is : " + id);
+			console.log("-->JobController",self.jobApplication);
+			JobService.rejectJobApplication(jobApplication, id).then(function(d) {
+				self.jobApplication = d;
+				alert('Job Application rejected successfully...');
+				self.listJobApplications();
+			},
+					function(errResponse) {
+						console.error("Error while rejecting job application...")
+					});
+		};
 	
 		
 		
@@ -131,7 +199,8 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 					location : '', 
 					description : '',
 					jobDate : '', 
-					status : '', 
+					status : '',
+					posts : '',
 					errorCode : '', 
 					errorMessage : ''
 			};

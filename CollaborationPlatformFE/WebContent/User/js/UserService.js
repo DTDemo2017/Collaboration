@@ -17,7 +17,20 @@ app.factory('UserService', ['$http', '$q', '$rootScope',
 							});
 			},
 			
-			searchForFriends : function() {
+			
+            myProfile: function() {
+            	console.log("calling myProfile ")
+                    return $http.get(BASE_URL+'/myProfile')
+                            .then(
+                                    function(response){
+                                        return response.data;
+                                    }, 
+                                   null
+                            );
+            },
+
+			
+			/*searchForFriends : function() {
 				console.log("--> UserService : calling 'fetchAllUsers' method.");
 				return $http
 							.get(BASE_URL+'/searchForFriends')
@@ -28,9 +41,35 @@ app.factory('UserService', ['$http', '$q', '$rootScope',
 								console.error('Error while fetching UserDetails...');
 								return $q.reject(errResponse);
 							});
+			},*/
+			
+			
+            /*sendFriendRequest : function(friendId) {
+				console.log("--> UserService : calling 'sendFriendRequest' method.");
+				return $http
+				.post(BASE_URL + '/user/addFriend/' + friendId)
+				.then(function(response) {
+							return response.data;
+						},
+						function(errResponse) {
+							console.error("-->UserService : Error while sending friend request.");
+							return $q.reject(errResponse);
+						});
+			},*/
+            
+            sendFriendRequest : function(user) {   //I made this method
+				console.log("-->UserService : calling 'sendFriendRequest' method.", self.user);
+				return $http
+							.post(BASE_URL+'/user/sendFriendRequest', user)
+							.then(function(response) {
+								return response.data;
+							},
+							function(errResponse) {
+								console.error('Error while sending friend request...');
+								return $q.reject(errResponse);
+							});
 			},
-			
-			
+
 			
 
 
@@ -134,8 +173,14 @@ app.factory('UserService', ['$http', '$q', '$rootScope',
 								return $q.reject(errResponse);
 							}
 						);
-			}
+			},
 			
+			
+			
+		
+			
+			
+
 			
 		
 		};

@@ -13,9 +13,9 @@
 							<h3 style="color:blue;">{{blogcomment.blogName}}</h3>
 							<p style="color:blue;"> {{blogcomment.comments}}</p>
 							<div class="more">
+		<a href = "#/view_blogcomment/" ng-click="ctrl.getBlogComment(blogcomment.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="Know More.."></a>						
 								
-								<input	type="button" class="btn btn-info btn-more"
-									ng-click="ctrl.getSelectedBlogComment(blogcomment.id)" value="Know More..">
 								
 							</div>
 						</div>
@@ -39,8 +39,8 @@
 							<h3 style="color:blue;">{{blogcomment.blogName}}</h3>
 							<p style="color:blue;"> {{blogcomment.comments}}</p>
 							<div class="more">
-								<input type="button" class="btn btn-info btn-more"
-									ng-click="ctrl.getSelectedBlogComment(blogcomment.id)" value="Know More..">
+								<a href = "#/view_blogcomment/" ng-click="ctrl.getBlogComment(blogcomment.id)"><input	type="button" class="btn btn-info btn-more"
+									 value="Know More.."></a>						
 							</div>
 						</div>
 						<div class="p-mask">

@@ -9,7 +9,7 @@ app.controller('ForumController', ['ForumService', '$scope', '$location', '$root
 			postDate : '',
 			userId : '',
 			status : '',
-			username : '',
+			userName : '',
 			errorCode : '',
 			errorMessage : ''
 		};
@@ -29,6 +29,12 @@ app.controller('ForumController', ['ForumService', '$scope', '$location', '$root
 		self.listForums();
 		self.createForum = function(forum) {
 			console.log("-->ForumController : calling 'createForum' method.");
+			var currentUser = $rootScope.currentUser
+			if (typeof currentUser == 'undefined') {
+				alert("Please Login to post a Forum...")
+				console.log('User not logged in , can not post a forum...');
+				$location.path('/user/login');
+			};
 			ForumService
 						.createForum(forum)
 						.then(function(d) {
@@ -71,7 +77,8 @@ app.controller('ForumController', ['ForumService', '$scope', '$location', '$root
 					description : '',
 					postDate : '',
 					userId : '',
-					status : '', 
+					status : '',
+					userName : '',
 					errorCode : '', 
 					errorMessage : ''
 			};

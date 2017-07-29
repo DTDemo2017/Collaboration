@@ -1,0 +1,121 @@
+<body>
+	<div class="generic-container" ng-controller="UserController as ctrl">
+
+ 
+
+			<div class="panel panel-default" align="center">
+				<div class="panel-heading">
+					<span class="lead">  MY PROFILE  </span>
+				</div>
+				<div class="formcontainer">
+					<form ng-submit="ctrl.updateUser()" name="myForm"
+						class="form-horizontal">
+
+							    <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="id">   ID</label>  
+								<div class="col-md-7">
+									<input type="text"  ng-model= "currentUser.id"  id="id"
+										class="userid form-control input-sm"
+										placeholder="Enter your ID" required ng-minlength="2" />
+								</div>
+							</div>
+						</div>
+						
+						
+						      <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="name">   NAME</label>  
+								<div class="col-md-7">
+									<input type="text"  ng-model= "currentUser.name"   id="name"
+										class="name form-control input-sm"
+										placeholder="Enter your Name" required ng-minlength="3" />
+								</div>
+							</div>
+						</div>
+						
+						
+
+						      <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="password">   PASSWORD</label>
+								<div class="col-md-7">
+									<input type="password" ng-model= "currentUser.password"  
+										id="password" class="password form-control input-sm"
+										placeholder="Enter your password" required ng-minlength="3" />
+								</div>
+							</div>
+						</div>
+
+
+						      <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="email">   Email</label>
+								<div class="col-md-7">
+									<input type="email" ng-model= "currentUser.email"   id="email"
+										class="email form-control input-sm"
+										placeholder="Enter your Email" required />
+
+								</div>
+							</div>
+						</div>
+						
+						
+						      <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="role">   ROLE</label>
+								<div class="col-md-7">
+									<input type="role" ng-model= "currentUser.role"   id="role"
+										class="role form-control input-sm"
+										placeholder="Enter your role" required />
+
+								</div>
+							</div>
+						</div>
+						
+						
+						      <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="status">   STATUS</label>
+								<div class="col-md-7">
+									<input type="status" ng-model= "currentUser.status"   id="status"
+										class="status form-control input-sm"
+										placeholder="Enter your status" required />
+
+								</div>
+							</div>
+						</div>
+						
+						
+						    <div class="row">
+							<div class="form-group col-md-12" align="center">
+								  <label class="col-md-2 control-lable" for="isOnline">   IS ONLINE</label>
+								<div class="col-md-7">
+									<input type="isOnline" ng-model= "currentUser.isOnline"   id="isOnline"
+										class="isOnline form-control input-sm"
+										placeholder="Enter your isOnline" required />
+
+								</div>
+							</div>
+						</div>
+
+						
+
+
+
+						   <div class="row" align="center">
+							    <div class="form-actions floatRight">
+								     <input type="submit"      value=    "Update"
+									 class="btn btn-primary btn-sm">
+								
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>

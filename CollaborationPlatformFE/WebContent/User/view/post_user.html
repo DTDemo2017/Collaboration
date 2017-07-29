@@ -12,28 +12,30 @@
 			<div class="row y-row">
 				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
 					<fieldset>
-						<legend>Post User</legend>
+						<legend style="color:blue;">POST USER</legend>
+						<hr>
 						<div class="form-inner">
 							<form ng-submit="ctrl.submit()" class="form-horizontal" name="myForm">
 								<div class="one">
 									<input ng-model="ctrl.user.id" type="text" required pattern=".{2,50}"
 										placeholder="Id">
 								</div>
-								
+								<hr>
 								<div class="one">
 									<input ng-model="ctrl.user.name" type="text" required pattern=".{3,25}"
 										placeholder="Name" />
 								</div>
-								
+								<hr>
 								<div class="one">
 									<input ng-model="ctrl.user.password" type="password" required pattern=".{3,25}"
 										placeholder="Password" />
 								</div>
-								
+								<hr>
 								<div class="one">
 									<textarea ng-model="ctrl.user.email" type="email" rows="5" required pattern=".{5,2500}"
 										placeholder="Email...."></textarea>
 								</div>
+								<hr>
 								<div>
 									<input type="submit" class="btn btn-info kp-button floatright"
 										value="submit">

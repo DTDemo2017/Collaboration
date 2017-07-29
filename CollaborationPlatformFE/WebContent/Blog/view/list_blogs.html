@@ -1,5 +1,5 @@
 <!-- all-blog-view -->
-<center><h2 style="color:blue;"><u> BLOGS </u></h2></center>
+<center><h2 style="color:blue;"><u> APPROVED BLOGS </u></h2></center>
 <div class="blogs">
 	<div class="container">
 		<div class="blog-all-grids">
@@ -13,6 +13,9 @@
 							<h4 style="color:blue;">Written By : {{blog.userName}}</h4>
 <a href = "#/view_blog/" ng-click="ctrl.getBlog(blog.id)"><input	type="button" class="btn btn-info btn-more"
 									 value="BLOG DETAILS"></a>
+<input type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.likeBlog(blog, blog.id)" value="Like">
+
 						</div>
 						<div class="p-mask">
 						    <h4>
@@ -34,7 +37,10 @@
 							<h3 style="color:blue;">{{blog.title}}</h3>
 							<h4 style="color:blue;">Written By : {{blog.userName}}</h4>
 <a href = "#/view_blog/" ng-click="ctrl.getBlog(blog.id)"><input	type="button" class="btn btn-info btn-more"
-									 value="BLOG DETAILS"></a>							
+									 value="BLOG DETAILS"></a>
+<input type="button" class="btn btn-info btn-more"
+									ng-click="ctrl.likeBlog(blog, blog.id)" value="Like">
+							
 						</div>
 						<div class="p-mask">
 						    <h4>

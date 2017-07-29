@@ -31,6 +31,20 @@ app.factory('BlogCommentService', ['$http', '$q', '$rootScope',
 							});
 			},
 			
+			getBlogComment : function(id) {
+				console.log("-->BlogCommentService : calling 'getBlogComment' method with id : "+id);
+				return $http
+							.get(BASE_URL+'/getBlogComment/'+id)
+							.then(function(response) {
+								$rootScope.selectedBlogComment = response.data;
+								return response.data;
+							},
+							function(errResponse) {
+								console.error('Error while getting blogcomment details');
+								return $q.reject(errResponse);
+							});
+			},
+			
 			
 		
 		};
