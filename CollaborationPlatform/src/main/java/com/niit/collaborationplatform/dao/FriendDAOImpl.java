@@ -171,4 +171,37 @@ Logger log = Logger.getLogger(FriendDAOImpl.class);
 		return friendList;
 	}
 
+	@Transactional
+	public List<Friend> getMyFriends(String userId) {
+		log.debug("**********Starting of getMyFriends() method.");
+		String hql = "from Friend where (userId = '" + userId + "' and status = 'A') or (friendId = '" + userId + "' and status = 'A')";
+		log.debug("**********hql : " + hql);
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		@SuppressWarnings("unchecked")
+		List<Friend> list = (List<Friend>) query.list();
+		log.debug("**********End of getMyFriends() method.");
+		return list;
+	}
+
+	@Transactional
+	public List<Friend> getNewFriendRequests(String userId) {
+		log.debug("**********Starting of getNewFriendRequests() method.");
+		
+		String hql = "from Friend where (friendId = '" + userId + "' and status = 'N') or (userId = '" + userId + "' and status = 'N')";
+		log.debug("***********hql : " + hql);
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		@SuppressWarnings("unchecked")
+		List<Friend> list = (List<Friend>) query.list();
+		log.debug("**********End of getNewFriendRequests() method.");
+		return list;
+	}
+
+
+
+	
+	
+	
+
 }

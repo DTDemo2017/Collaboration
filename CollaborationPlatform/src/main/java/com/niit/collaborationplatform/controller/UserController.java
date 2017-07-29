@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niit.collaborationplatform.dao.FriendDAO;
 import com.niit.collaborationplatform.dao.UserDAO;
+import com.niit.collaborationplatform.model.Friend;
 import com.niit.collaborationplatform.model.Users;
 
 @RestController
@@ -26,6 +32,18 @@ Logger log = Logger.getLogger(UserController.class);
 	
 	@Autowired
 	UserDAO userDAO;
+	
+	@Autowired
+	HttpSession session;
+	
+	@Autowired
+	FriendDAO friendDAO;
+	
+	@Autowired
+	Friend friend;
+	
+	@Autowired
+	Users users;
 	
 	@GetMapping(value = "/users")
 	public ResponseEntity<List<Users>> listUsers() {
@@ -37,6 +55,50 @@ Logger log = Logger.getLogger(UserController.class);
 		log.debug("**********End of listUsers() method.");
 		return new ResponseEntity<List<Users>>(users, HttpStatus.OK);
 	}
+	
+	
+	/*@PostMapping(value = "/user/addFriend/{friendId}")			
+	public ResponseEntity<Friend> sendFriendRequest(@PathVariable("friendId") String friendId) {
+		
+		log.debug("**********Starting of sendFriendRequest() method");
+		String userId = (String) session.getAttribute("loggedInUserID");
+		
+		Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+		String userName = loggedInUser.getName();
+		
+		friend.setUserId(userId);
+		friend.setUserName(userName);
+		friend.setFriendId(friendId);
+		friend.setIsOnline("Y");
+		friend.setStatus("N");	// N = New, A = Accepted, R = Rejected, U = Unfriend 
+		
+		
+		friendDAO.save(friend);
+		
+		log.debug("**********End of sendFriendRequest() method");		
+		return new ResponseEntity<Friend> (friend, HttpStatus.OK);
+	}*/
+	
+	@PostMapping(value = "/user/sendFriendRequest")//I made this method
+	public ResponseEntity<Friend> sendFriendRequest(@RequestBody Users users, HttpSession httpSession) {
+	              log.debug("**********Starting of sendFriendRequest() method.");
+	      {
+	              Users loggedInUser = (Users)httpSession.getAttribute("loggedInUser");
+	              friend.setUserId(loggedInUser.getId());
+	              friend.setUserName(loggedInUser.getName());
+	              friend.setIsOnline("Y");
+	              friend.setStatus("N"); // N = New, A = Accepted, R = Rejected, U = Unfriended 
+	              friend.setFriendId(users.getId());
+	              friend.setFriendName(users.getName());
+
+	              friendDAO.save(friend);
+	         
+	              log.debug("**********End of sendFriendRequest() method.");
+	              return new ResponseEntity<Friend>(friend,HttpStatus.OK);
+		}
+	}
+
+	
 
 
 
@@ -46,11 +108,11 @@ public ResponseEntity<Users> saveUser(@RequestBody Users users, HttpSession sess
 	
 	{
 		
-		//users.setId(2);
-		//users.setName("Arushi ");
-		//users.setPassword("arushi ");
-		//users.setEmail("arushisinha@hotmail.com ");
-		users.setRole("Admin ");
+		//users.setId(2);//
+		//users.setName("Arushi ");//
+		//users.setPassword("arushi ");//
+		//users.setEmail("arushisinha@hotmail.com ");//
+		users.setRole("Student ");
 		users.setStatus("N ");
 		users.setIsOnline("Y ");
 		
@@ -109,6 +171,25 @@ public ResponseEntity<Users> saveUser(@RequestBody Users users, HttpSession sess
 	
 	
 	
+	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
+	public ResponseEntity<Users> myProfile() {
+		log.debug("->->calling method myProfile");
+		String loggedInUserID = (String) session.getAttribute("loggedInUserID");
+		Users user = userDAO.get(loggedInUserID);
+		if (user == null) {
+			log.debug("->->->-> User does not exist wiht id" + loggedInUserID);
+			user = new Users(); // It does not mean that we are inserting new row
+			user.setErrorCode("404");
+			user.setErrorMessage("User does not exist");
+			return new ResponseEntity<Users>(user, HttpStatus.NOT_FOUND);
+		}
+		log.debug("->->->-> User exist with id" + loggedInUserID);
+		log.debug(user.getName());
+		return new ResponseEntity<Users>(user, HttpStatus.OK);
+	}
+	
+	
+	
 	@PostMapping(value = "/user/login")
 	public ResponseEntity<Users> login(@RequestBody Users users, HttpSession session) {
 		log.debug("**********Starting of login() method.");
@@ -134,7 +215,7 @@ public ResponseEntity<Users> saveUser(@RequestBody Users users, HttpSession sess
 	
 	
 	@GetMapping(value = "/user/logout")
-	public ResponseEntity<Users> logout(HttpSession session) {
+	public ResponseEntity<Users> logout(Users users, HttpSession session) {
 		log.debug("**********Starting of logout() method.");
 		
 	String userId = (String) session.getAttribute("loggedInUserID");
@@ -143,7 +224,7 @@ public ResponseEntity<Users> saveUser(@RequestBody Users users, HttpSession sess
 		
 		//friendDAO.setOffline(userId);
 		userDAO.setOffline(userId);
-		
+		users.setIsOnline("N");
 		
 		session.invalidate();
 		log.debug("**********End of logout() method.");

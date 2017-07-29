@@ -2,7 +2,6 @@ package com.niit.collaborationplatform.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,10 +43,13 @@ private static final long serialVersionUID = 10L;
 	private String status;
 	
 	private String userName;
+	
 
 	
 	
 	
+	
+
 	public int getId() {
 		return id;
 	}

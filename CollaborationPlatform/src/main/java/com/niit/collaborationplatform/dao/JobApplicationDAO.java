@@ -21,7 +21,7 @@ public interface JobApplicationDAO {
 	
 	public boolean callForInterview(JobApplication jobapplication);
 	
-	public boolean rejectJobApplication(JobApplication jobapplication);
+	public boolean reject(JobApplication jobapplication);
 	
 	
 

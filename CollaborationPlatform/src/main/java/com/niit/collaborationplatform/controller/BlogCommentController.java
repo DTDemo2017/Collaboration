@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collaborationplatform.dao.BlogCommentDAO;
 import com.niit.collaborationplatform.model.BlogComment;
+import com.niit.collaborationplatform.model.Users;
 
 @RestController
 public class BlogCommentController {
@@ -47,17 +48,20 @@ Logger log = Logger.getLogger(BlogCommentController.class);
 	@PostMapping(value = "/blogcomment/")
 	public ResponseEntity<BlogComment> saveBlogComment(@RequestBody BlogComment blogcomment, HttpSession session) {
 		log.debug("**********Starting of saveBlogComment() method.");
-		
+		Users loggedInUser = (Users)session.getAttribute("loggedInUser");
+		blogcomment.setUserId(loggedInUser.getId());
+		blogcomment.setUserName(loggedInUser.getName());
 		{
 			
 			//blogcomment.setId(9);
-			blogcomment.setBlogId(1);
-			//blogcomment.setComments("I like learning from the maven blog!");
+			blogcomment.setBlogId(4);
+			//blogcomment.setComments("I like learning from the core java blog!");//
 			blogcomment.setCommentDate(new Date());
-			blogcomment.setUserId("U7");
-			//blogcomment.setUserName("Aashi");
-			blogcomment.setBlogName("Core Java");
+			//blogcomment.setUserId("U7");//
+			//blogcomment.setUserName("Ananya");//
+			blogcomment.setBlogName("MAVEN");
 			blogcommentDAO.save(blogcomment);
+			
 			log.debug("**********End of saveBlogComment() method.");
 			return new ResponseEntity<BlogComment>(blogcomment, HttpStatus.OK);
 			

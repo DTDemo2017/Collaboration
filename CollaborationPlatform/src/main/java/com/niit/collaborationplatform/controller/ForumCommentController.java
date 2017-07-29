@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collaborationplatform.dao.ForumCommentDAO;
 import com.niit.collaborationplatform.model.ForumComment;
+import com.niit.collaborationplatform.model.Users;
 
 @RestController
 public class ForumCommentController {
@@ -48,20 +49,25 @@ Logger log = Logger.getLogger(ForumCommentController.class);
 	public ResponseEntity<ForumComment> saveForumComment(@RequestBody ForumComment forumcomment, HttpSession session) {
 		log.debug("**********Starting of saveForumComment() method.");
 		
+		Users loggedInUser = (Users)session.getAttribute("loggedInUser");
+		forumcomment.setUserId(loggedInUser.getId());
+		forumcomment.setUserName(loggedInUser.getName());
 		{
 			
 			//forumcomment.setId(8);
 			
-			//forumcomment.setForumId(4);
-			//forumcomment.setComments("Queries related to WBUT exams are discussed at the WBUT ADDA forum!");
-			forumcomment.setUserId("U8");//Aashi
+			//forumcomment.setForumId(3);//
+			//forumcomment.setComments("Queries related to WBUT exams are discussed at the WBUT ADDA forum!");//
+			//forumcomment.setUserId("U7");
 			forumcomment.setCommentDate(new Date());
-			forumcomment.setForumName("BUDDY NET LEARNING");
-			forumcomment.setUserName("Ankita");
+			forumcomment.setForumName("COLLEGE CONFIDENTIAL");
+			//forumcomment.setUserName("Ananya");
+			
 			
 			
 			forumcommentDAO.save(forumcomment);
 			log.debug("**********End of saveForumComment() method.");
+			
 			return new ResponseEntity<ForumComment>(forumcomment, HttpStatus.OK);
 			
 		}
@@ -117,7 +123,31 @@ Logger log = Logger.getLogger(ForumCommentController.class);
 		return new ResponseEntity<ForumComment>(forumcomment, HttpStatus.OK);
 	}
 	
+	/*@GetMapping(value = "/getForumComment/{forumId}")
+	public ResponseEntity<ForumComment> getForumComment1(@PathVariable("forumId") int forumId) {
+		log.debug("**********Starting of getForumComment1() method.");
+		ForumComment forumcomment = forumcommentDAO.get(forumId);
+		if(forumcomment == null) {
+			forumcomment = new ForumComment();
+			forumcomment.setErrorMessage("No forumcomment exist with forumId : " +forumId);
+			log.error("No forumcomment exist with forumId : " + forumId);
+			return new ResponseEntity<ForumComment>(forumcomment, HttpStatus.NOT_FOUND);
+		}
+		log.debug("**********End of getForumComment1() method.");
+		return new ResponseEntity<ForumComment>(forumcomment, HttpStatus.OK);
+	}*/
 	
+	@GetMapping(value = "/forumComments/{forumId}")
+	public ResponseEntity<List<ForumComment>> listForumComments(@PathVariable("forumId") int forumId) {
+		log.debug("**********Starting of listForumComments() method.");
+		List<ForumComment> forumComment = forumcommentDAO.getComments(forumId);
+		if(forumComment.isEmpty()) {
+			return new ResponseEntity<List<ForumComment>>(HttpStatus.NO_CONTENT);
+		}
+		log.debug("**********End of listForumComments() method.");
+		return new ResponseEntity<List<ForumComment>>(forumComment, HttpStatus.OK);
+	}
+
 	
 
 }

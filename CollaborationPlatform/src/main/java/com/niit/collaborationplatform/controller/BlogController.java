@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collaborationplatform.dao.BlogDAO;
 import com.niit.collaborationplatform.model.Blog;
+import com.niit.collaborationplatform.model.Users;
 
 @RestController
 public class BlogController {
@@ -53,13 +54,17 @@ public class BlogController {
 	public ResponseEntity<Blog> saveBlog(@RequestBody Blog blog, HttpSession session) {
 		log.debug("**********Starting of saveBlog() method.");
 		
+		Users loggedInUser = (Users)session.getAttribute("loggedInUser");
+		blog.setUserId(loggedInUser.getId());
+		blog.setUserName(loggedInUser.getName());
+		
 		{
 			
-			blog.setUserId("U1");
+			//blog.setUserId("U1");//
 			blog.setCountLike(3);
 			blog.setStatus("N");
 			blog.setPostDate(new Date());
-			blog.setUserName("Ashwini");
+			//blog.setUserName("Ashwini");//
 			blogDAO.save(blog);
 			log.debug("**********End of saveBlog() method.");
 			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
@@ -148,8 +153,8 @@ public class BlogController {
 	public ResponseEntity<Blog> approveBlog( @PathVariable("id") int id,@RequestBody Blog blog) {
 		log.debug("**********Starting of approveBlog() method.");
 		Blog blog1=blogDAO.get(id);
-		blog1.setStatus(blog.getStatus());
-		//blog.setStatus("A");	// A = Accept, R = Reject, N = New
+		//blog1.setStatus(blog.getStatus());
+		  blog1.setStatus("A");	// A = Approve, R = Reject, N = New
 		blogDAO.update(blog1);
 		
 		log.debug("**********End of approveBlog() method.");
@@ -165,8 +170,8 @@ public class BlogController {
 	public ResponseEntity<Blog> rejectBlog(@PathVariable("id") int id, @RequestBody Blog blog) {
 		log.debug("**********Starting of rejectBlog() method.");
 		Blog blog1=blogDAO.get(id);
-		blog1.setStatus(blog.getStatus());
-		//blog.setStatus("R");	// A = Accept, R = Reject, N = New
+		//blog1.setStatus(blog.getStatus());
+		blog1.setStatus("R");	// A = Accept, R = Reject, N = New
 		blogDAO.update(blog1);
 		
 		log.debug("**********End of rejectBlog() method.");

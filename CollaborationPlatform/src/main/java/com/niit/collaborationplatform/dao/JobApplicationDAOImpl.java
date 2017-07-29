@@ -160,7 +160,7 @@ public class JobApplicationDAOImpl implements JobApplicationDAO {
 			log.debug("**********Starting of callForInterview() method.");
 
 			Session session = getSession();
-			jobApplication.setStatus("C");	
+				
 			session.update(jobApplication);
 			session.flush();
 			session.close();
@@ -180,11 +180,11 @@ public class JobApplicationDAOImpl implements JobApplicationDAO {
 
 	
 
-	public boolean rejectJobApplication(JobApplication jobapplication) {
+	public boolean reject(JobApplication jobapplication) {
 		try {
 			log.debug("**********Starting of rejectJobApplication() method.");
             Session session = getSession();
-            jobApplication.setStatus("R");
+            
 			session.update(jobApplication);
 			session.flush();
 			session.close();

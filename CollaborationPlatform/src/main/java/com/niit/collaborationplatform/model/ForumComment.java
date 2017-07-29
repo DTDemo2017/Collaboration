@@ -48,6 +48,7 @@ private String userName;
 
 
 
+
 public int getId() {
 	return id;
 }
@@ -84,6 +85,8 @@ public Date getCommentDate() {
 	return commentDate;
 }
 
+
+
 public void setCommentDate(Date commentDate) {
 	this.commentDate = commentDate;
 }
@@ -106,6 +109,8 @@ public String getUserName() {
 public void setUserName(String userName) {
 	this.userName = userName;
 }
+
+
 
 
 

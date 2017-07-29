@@ -27,6 +27,11 @@ Logger log = Logger.getLogger(FriendController.class);
 	@Autowired
 	FriendDAO friendDAO;
 	
+	@Autowired
+	Friend friend;
+	
+	
+	
 	@GetMapping(value = "/friends")
 	public ResponseEntity<List<Friend>> listFriends() {
 		log.debug("**********Starting of listFriends() method.");
@@ -95,7 +100,7 @@ public ResponseEntity<Friend> saveFriend(@RequestBody Friend friend, HttpSession
 	}
 	
 	
-	@GetMapping(value = "/getFriend/{id}")
+	/*@GetMapping(value = "/getFriend/{id}")   //this method is working
 	public ResponseEntity<Friend> getFriend(@PathVariable("id") int id) {
 		log.debug("**********Starting of getFriend() method.");
 		Friend friend = friendDAO.get(id);
@@ -107,7 +112,90 @@ public ResponseEntity<Friend> saveFriend(@RequestBody Friend friend, HttpSession
 		}
 		log.debug("**********End of getFriend() method.");
 		return new ResponseEntity<Friend>(friend, HttpStatus.OK);
+	}*/
+	
+	
+	
+	
+	@GetMapping(value = "/user/myFriends")
+	public ResponseEntity<List<Friend>> myFriends(HttpSession httpSession) {
+		log.debug("**********Starting of myFriends() method");
+		String userId = (String) httpSession.getAttribute("loggedInUserID");
+        //Users loggedInUser = (Users) httpSession.getAttribute("loggedInUser");
+		//String userId = loggedInUser.getId();       //loggedInUserId
+		
+        @SuppressWarnings("unchecked")
+		List<Friend> myFriends = (List<Friend>)friendDAO.getMyFriends(userId);//loggedInUserId
+		log.debug("**********End of myFriends() method");
+		return new ResponseEntity<List<Friend>> (myFriends, HttpStatus.OK);
 	}
+	
+	
+	@GetMapping(value = "/user/getFriend/{id}")    //this method is also working
+	public ResponseEntity<Friend> getFriend(@PathVariable("id") int id) {
+		log.debug("**********Starting of getFriend() method.");
+		Friend friend = friendDAO.get(id);
+		log.debug("**********End of getFriend() method.");
+		return new ResponseEntity<Friend>(friend, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/user/newFriendRequests")			
+	public ResponseEntity<List<Friend>> newFriendRequests(HttpSession session) {
+		log.debug("**********Starting of newFriendRequests() method");
+		
+		String userId = (String) session.getAttribute("loggedInUserID");
+		log.debug("********** Calling newFriendRequests() method for Userid : " + userId);
+		
+		List<Friend> newRequests = friendDAO.getNewFriendRequests(userId);
+		log.debug("**********End of newFriendRequests() method");
+		return new ResponseEntity<List<Friend>> (newRequests, HttpStatus.OK);
+	}
+
+
+
+	
+	
+	@PutMapping(value = "/user/rejectFriend/{id}")				
+	public ResponseEntity<Friend> rejectFriendRequest(@PathVariable("id") int id, @RequestBody Friend friend, HttpSession session) {
+		log.debug("**********Starting of rejectFriendRequest() method with id : "+id);
+		
+		Friend friend2=friendDAO.get(id);
+		friend2.setStatus("R");	// N = New, A = Accepted, R = Rejected, U = Unfriend  						
+		friendDAO.update(friend2);
+		
+		log.debug("**********End of rejectFriendRequest() method");
+		return new ResponseEntity<Friend> (friend2, HttpStatus.OK);
+	}
+
+    
+	@PutMapping(value = "/user/acceptFriend/{id}")			
+	public ResponseEntity<Friend> acceptFriendRequest(@PathVariable("id") int id, @RequestBody Friend friend, HttpSession session) {
+		log.debug("**********Starting of acceptFriendRequest() method with id : "+id);
+		
+		Friend friend3=friendDAO.get(id);
+		friend3.setStatus("A");	// N = New, A = Accepted, R = Rejected, U = Unfriend  						
+		friendDAO.update(friend3);
+		
+		log.debug("**********End of acceptFriendRequest() method");
+		return new ResponseEntity<Friend> (friend3, HttpStatus.OK);
+	}
+	
+	
+	@PutMapping(value = "/user/unFriend/{id}")			
+	public ResponseEntity<Friend> unFriend(@PathVariable("id") int id, @RequestBody Friend friend, HttpSession session) {
+		log.debug("**********Starting of unFriend() method with id : "+id);
+		
+		Friend friend4=friendDAO.get(id);
+		friend4.setStatus("U");	// N = New, A = Accepted, R = Rejected, U = Unfriend  		
+		friendDAO.update(friend4);
+		
+		log.debug("**********End of unFriend() method");
+		return new ResponseEntity<Friend> (friend4, HttpStatus.OK);
+	}
+
+
+	
 	
 
 }

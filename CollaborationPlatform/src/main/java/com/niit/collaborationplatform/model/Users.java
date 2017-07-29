@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -27,6 +28,7 @@ private static final long serialVersionUID = 10L;
 	
 	private String password;
 	
+	@Email
 	private String email;
 	
 	private String role;

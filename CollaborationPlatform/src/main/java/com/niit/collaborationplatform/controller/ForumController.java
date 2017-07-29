@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collaborationplatform.dao.ForumDAO;
-import com.niit.collaborationplatform.model.Blog;
 import com.niit.collaborationplatform.model.Forum;
+import com.niit.collaborationplatform.model.Users;
 
 @RestController
 public class ForumController {
@@ -45,15 +45,20 @@ Logger log = Logger.getLogger(ForumController.class);
 public ResponseEntity<Forum> saveForum(@RequestBody Forum forum, HttpSession session) {
 	log.debug("**********Starting of saveForum() method.");
 	
+	Users loggedInUser = (Users)session.getAttribute("loggedInUser");
+	forum.setUserId(loggedInUser.getId());
+	forum.setUserName(loggedInUser.getName());
+	
+	
 	{
 		
 		//forum.setId(1);
 		
-		//forum.setDescription("Assemble Here ");
+		//forum.setDescription("Assemble Here ");//
 		  forum.setPostDate(new Date());
-		//forum.setUserId("U1 ");
+		//forum.setUserId("U10 ");//
 		  forum.setStatus("N");
-		  forum.setUserName("Anita");
+		//forum.setUserName("Anita");//
 		  
 		
 		
@@ -117,8 +122,8 @@ public ResponseEntity<Forum> saveForum(@RequestBody Forum forum, HttpSession ses
 	public ResponseEntity<Forum> approveForum( @PathVariable("id") int id,@RequestBody Forum forum) {
 		log.debug("**********Starting of approveForum() method.");
 		Forum forum1=forumDAO.get(id);
-		forum1.setStatus(forum.getStatus());
-		//blog.setStatus("A");	// A = Accept, R = Reject, N = New
+		//forum1.setStatus(forum.getStatus());
+		forum1.setStatus("A");	// A = Accept, R = Reject, N = New
 		forumDAO.update(forum1);
 		
 		log.debug("**********End of approveForum() method.");

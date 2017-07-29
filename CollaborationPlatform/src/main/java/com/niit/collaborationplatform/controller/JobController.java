@@ -57,15 +57,16 @@ public class JobController {
 @PostMapping(value = "/job/")
 public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 	log.debug("**********Starting of saveJob() method.");
-	
+	Users loggedInUser = (Users)session.getAttribute("loggedInUser");
 	{
 		
 		//job.setId(2);
-		//job.setCompanyName("Wipro ");
-		//job.setLocation("Salt Lake SectorV");
-		//job.setDescription("BPO for British Telecom ");
+		//job.setCompanyName("Wipro ");//
+		//job.setLocation("Salt Lake SectorV");//
+		//job.setDescription("BPO for British Telecom ");//
 		job.setJobDate(new Date());
 		job.setStatus("V");
+		job.setPosts(400);
 		
 		jobDAO.save(job);
 		log.debug("**********End of saveJob() method.");
@@ -138,7 +139,7 @@ public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 		log.debug("**********Starting of applyForJob() method.");
      {
     	 
-		Users loggedInUser = (Users) httpSession.getAttribute("loggedInUser");
+		Users loggedInUser = (Users)httpSession.getAttribute("loggedInUser");
 		jobApplication.setUserId(loggedInUser.getId());
                                        //jobApplication.setUserId("U1");
 		//jobApplication.setJobId("J2");
@@ -170,11 +171,12 @@ public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 	@GetMapping(value = "/getMyAppliedJobs")
 	public ResponseEntity<List<JobApplication>> getMyAppliedJobs(HttpSession httpSession) {
 		log.debug("**********Starting of getMyAppliedJobs() method.");
-		Users loggedInUser = (Users) httpSession.getAttribute("loggedInUser");
-		String loggedInUserId = loggedInUser.getId();
+		String userId = (String)httpSession.getAttribute("loggedInUserID");
+		//Users loggedInUser = (Users) httpSession.getAttribute("loggedInUser");
+		//String loggedInUserId = loggedInUser.getId();
 		
 		@SuppressWarnings("unchecked")
-		List<JobApplication> jobapplications = (List<JobApplication>) jobApplicationDAO.getMyAppliedJobs(loggedInUserId);
+		List<JobApplication> jobapplications = (List<JobApplication>) jobApplicationDAO.getMyAppliedJobs(userId);//loggedInUserId
 		log.debug("**********End of getMyAppliedJobs() method.");
 		return new ResponseEntity<List<JobApplication>>(jobapplications, HttpStatus.OK);
 	}
@@ -235,7 +237,7 @@ public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 	}
 
 	
-	@PutMapping(value = "/callForInterview/{userId}/{jobId}")
+	/*@PutMapping(value = "/callForInterview/{userId}/{jobId}")
 	public ResponseEntity<JobApplication> callForInterview(@PathVariable("userId") String userId,
 			@PathVariable("jobId") String jobId, @RequestBody JobApplication jobApplication) {
 		log.debug("**********Starting of callForInterview() method.");
@@ -248,10 +250,26 @@ public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 		}
 		log.debug("**********End of callForInterview() method.");
 		return new ResponseEntity<JobApplication>(jobApplication, HttpStatus.OK);
+	}*/
+	
+	
+	@PutMapping(value = "/callForInterview/{id}")   // in URL we give/callForInterview/1
+	public ResponseEntity<JobApplication> callForInterview(@PathVariable("id") int id, @RequestBody JobApplication jobApplication)
+	{
+		log.debug("**********Starting of callForInterview() method.");
+		
+		{
+				JobApplication jobApplication2=jobApplicationDAO.get(id);
+				//jobApplication2.setStatus(jobApplication.getStatus());//C-callForInterview
+				jobApplication2.setStatus("C");	// C= Call for Interview, R = Reject Job Application, A = Applied
+				jobApplicationDAO.update(jobApplication2);
+				log.debug("**********End of callForInterview() method.");
+			return new ResponseEntity<JobApplication>(jobApplication2, HttpStatus.OK);
+		}
 	}
 	
 	
-	@PutMapping(value = "/rejectJobApplication/{userId}/{jobId}")
+	/*@PutMapping(value = "/rejectJobApplication/{userId}/{jobId}")
 	public ResponseEntity<JobApplication> rejectJobApplication(@PathVariable("userId") String userId,
 			@PathVariable("jobId") String jobId, @RequestBody JobApplication jobApplication) {
 		log.debug("**********Starting of rejectJobApplication() method.");
@@ -264,5 +282,22 @@ public ResponseEntity<Job> saveJob(@RequestBody Job job, HttpSession session) {
 		}
 		log.debug("**********End of rejectJobApplication() method.");
 		return new ResponseEntity<JobApplication>(jobApplication, HttpStatus.OK);
+	}*/
+	
+	
+	@PutMapping(value = "/rejectJobApplication/{id}")   // in URL we give/rejectJobApplication/1
+	public ResponseEntity<JobApplication> rejectJobApplication(@PathVariable("id") int id, @RequestBody JobApplication jobApplication) 
+	{
+		log.debug("**********Starting of rejectJobApplication() method.");
+		
+		{
+				JobApplication jobApplication3=jobApplicationDAO.get(id);
+				//jobApplication3.setStatus(jobApplication.getStatus());//R-Rejected
+				jobApplication3.setStatus("R");	// C= Call for Interview, R = Reject Job Application, A = Applied
+				jobApplicationDAO.update(jobApplication3);
+				log.debug("**********End of rejectJobApplication() method.");
+			return new ResponseEntity<JobApplication>(jobApplication3, HttpStatus.OK);
+		}
+		
 	}
 }
